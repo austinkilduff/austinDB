@@ -58,7 +58,7 @@ class Table:
 
     ''' Table operations '''
     # Print the table
-    def print_table(self):
+    def print(self):
         for table_name in self.database.db:
             print(table_name)
             for db_row in self.database.db[table_name]:
