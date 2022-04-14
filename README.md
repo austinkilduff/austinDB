@@ -22,7 +22,6 @@ Read all matching rows in any of the following ways:
     dogs.read() # For all rows
     dogs.read(["name"]) # For all names
     dogs.read(["breed"], ["name"], [(lambda name: name == "Mose")]) # For all breeds where name is Mose
-    dogs.read(["breed"], ["name"], [(lambda name: name == "Mose")]) # For all breeds where name is Mose
     dogs.read(["breed"], ["name", "age"], [(lambda name: name == "Mose"), (lambda age: age < 5)]) # Multiple conditions!
     
 Update a row like this:
