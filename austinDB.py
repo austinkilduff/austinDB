@@ -95,7 +95,7 @@ class Table:
         return matching_rows
 
     # Given a list of fields to update, list of updated values, list of fields to test, and list of test functions, update the fields from matching rows in the table
-    def update(self, update_field_names, update_values, test_field_names, test_functions=[(lambda: True)]):
+    def update(self, update_field_names, update_values, test_field_names=[], test_functions=[(lambda *x: True)]):
         db_field_names = self.database.db[self.table_name][0]
         db_update_field_indices = [db_field_names.index(update_field_name) for update_field_name in update_field_names]
         db_test_field_indices = [db_field_names.index(test_field_name) for test_field_name in test_field_names]
