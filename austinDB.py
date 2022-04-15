@@ -8,46 +8,41 @@ class Database:
         self.db = {}
 
         try:
-            self.read_database()
+            self.load_database()
         except:
-            self.write_database()
+            self.save_database()
 
         self.tables = [Table(self, table_name) for table_name in self.db]
 
     ''' File operations '''
-    def read_database(self):
+    def load_database(self):
         with open(self.db_filename) as db_f:
             self.db = json.loads(db_f.read())
 
-    def write_database(self):
+    def save_database(self):
         with open(self.db_filename, "w") as db_f:
             db_f.write(json.dumps(self.db))
 
     ''' Table operations '''
-    # Return the names of all tables
-    def get_table_names(self):
-        return [table.table_name for table in self.tables]
+    # Given a table name and list of field names, add a table
+    def create_table(self, table_name, fields):
+        self.db[table_name] = [fields]
+        self.tables.append(Table(self, table_name))
+        self.save_database()
 
     # Given a table name, return the contents of the table
-    def get_table(self, table_name):
+    def read_table(self, table_name):
         for table in self.tables:
             if table_name == table.table_name:
                 return table
 
-    # Given a table name and list of field names, add a table
-    def add_table(self, table_name, fields):
-        self.db[table_name] = [fields]
-        table = Table(self, table_name)
-        self.tables.append(table)
-        self.write_database()
-
     # Given a table name, remove the table
-    def remove_table(self, table_name):
+    def delete_table(self, table_name):
         self.db.pop(table_name, None)
         for i, table in enumerate(self.tables):
             if table_name == table.table_name:
                 self.tables.pop(i)
-        self.write_database()
+        self.save_database()
 
 # Table class
 class Table:
@@ -68,7 +63,7 @@ class Table:
     # Given a list of values, create a row in the table
     def create(self, values):
         self.database.db[self.table_name].append(values)
-        self.database.write_database()
+        self.database.save_database()
 
     # Given a list of fields to read, list of fields to test, and list of test functions, read the fields from matching rows in the table
     def read(self, read_field_names=[], test_field_names=[], test_functions=[(lambda *x: True)]):
@@ -79,8 +74,8 @@ class Table:
             read_field_names = db_field_names
         db_read_field_indices = [db_field_names.index(read_field_name) for read_field_name in read_field_names]
         db_test_field_indices = [db_field_names.index(test_field_name) for test_field_name in test_field_names]
-        db_rows = self.database.db[self.table_name][1:]
 
+        db_rows = self.database.db[self.table_name][1:]
         for db_row in db_rows:
             test_function_evaluations = []
 
@@ -99,8 +94,8 @@ class Table:
         db_field_names = self.database.db[self.table_name][0]
         db_update_field_indices = [db_field_names.index(update_field_name) for update_field_name in update_field_names]
         db_test_field_indices = [db_field_names.index(test_field_name) for test_field_name in test_field_names]
-        db_rows = self.database.db[self.table_name][1:]
 
+        db_rows = self.database.db[self.table_name][1:]
         for db_row in db_rows:
             test_function_evaluations = []
 
@@ -113,14 +108,14 @@ class Table:
                 for update_value_index, db_update_field_index in enumerate(db_update_field_indices):
                     db_row[db_update_field_index] = update_values[update_value_index]
 
-        self.database.write_database()
+        self.database.save_database()
 
     # Given a list of fields to test and list of test functions, delete the matching rows from the table
     def delete(self, test_field_names, test_functions):
         db_field_names = self.database.db[self.table_name][0]
         db_test_field_indices = [db_field_names.index(test_field_name) for test_field_name in test_field_names]
-        db_rows = self.database.db[self.table_name][1:]
 
+        db_rows = self.database.db[self.table_name][1:]
         for db_row in db_rows:
             test_function_evaluations = []
 
@@ -132,4 +127,4 @@ class Table:
             if False not in test_function_evaluations:
                 self.database.db[self.table_name].remove(db_row)
 
-        self.database.write_database()
+        self.database.save_database()
