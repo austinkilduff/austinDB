@@ -75,8 +75,7 @@ class Table:
         db_read_field_indices = [db_field_names.index(read_field_name) for read_field_name in read_field_names]
         db_test_field_indices = [db_field_names.index(test_field_name) for test_field_name in test_field_names]
 
-        db_rows = self.database.db[self.table_name][1:]
-        for db_row in db_rows:
+        for db_row in self.database.db[self.table_name][1:]:
             test_function_evaluations = []
 
             for test_function_index, db_test_field_index in enumerate(db_test_field_indices):
@@ -95,8 +94,7 @@ class Table:
         db_update_field_indices = [db_field_names.index(update_field_name) for update_field_name in update_field_names]
         db_test_field_indices = [db_field_names.index(test_field_name) for test_field_name in test_field_names]
 
-        db_rows = self.database.db[self.table_name][1:]
-        for db_row in db_rows:
+        for db_row in self.database.db[self.table_name][1:]:
             test_function_evaluations = []
 
             for test_function_index, db_test_field_index in enumerate(db_test_field_indices):
@@ -115,8 +113,7 @@ class Table:
         db_field_names = self.database.db[self.table_name][0]
         db_test_field_indices = [db_field_names.index(test_field_name) for test_field_name in test_field_names]
 
-        db_rows = self.database.db[self.table_name][1:]
-        for db_row in db_rows:
+        for db_row in self.database.db[self.table_name][1:]:
             test_function_evaluations = []
 
             for test_function_index, db_test_field_index in enumerate(db_test_field_indices):
