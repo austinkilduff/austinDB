@@ -10,8 +10,8 @@ A basic database can be setup with a table like this:
 
     import austinDB
     db = austinDB.Database("my_database.json")
-    db.create_table("dogs", ["name", "age", "breed"])
-    dogs = db.read_table("dogs")
+    db.create("dogs", ["name", "age", "breed"])
+    dogs = db.read("dogs")
 
 Create a row like this:
 
@@ -38,18 +38,18 @@ Tables can be pretty-printed like this:
 
 Tables can be dropped like this:
 
-    db.delete_table("dogs")
+    db.delete("dogs")
 
 You can do cool stuff like this too:
 
-    db.create_table("dogs", ["name", "owner_name"])
-    dogs = db.read_table("dogs")
+    db.create("dogs", ["name", "owner_name"])
+    dogs = db.read("dogs")
     dogs.create(["Mose", "Austin"])
     dogs_result = dogs.read(["owner_name"], ["name"], [(lambda name: name == "Mose")])
     mose_owner = dogs_result[0][0] # 0th row, 0th field
 
-    db.create_table("owners", ["name", "favorite_color"])
-    owners = db.read_table("owners")
+    db.create("owners", ["name", "favorite_color"])
+    owners = db.read("owners")
     owners.create(["Austin", "orange"])
     owners_result = owners.read(["favorite_color"], ["name"], [(lambda name: name == mose_owner)])
     favorite_color = owners_result[0][0] # Gets us "orange"!

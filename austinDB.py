@@ -25,19 +25,19 @@ class Database:
 
     ''' Table operations '''
     # Given a table name and list of field names, add a table
-    def create_table(self, table_name, fields):
+    def create(self, table_name, fields):
         self.db[table_name] = [fields]
         self.tables.append(Table(self, table_name))
         self.save_database()
 
     # Given a table name, return the contents of the table
-    def read_table(self, table_name):
+    def read(self, table_name):
         for table in self.tables:
             if table_name == table.table_name:
                 return table
 
     # Given a table name, remove the table
-    def delete_table(self, table_name):
+    def delete(self, table_name):
         self.db.pop(table_name, None)
         for i, table in enumerate(self.tables):
             if table_name == table.table_name:
