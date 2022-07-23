@@ -51,14 +51,6 @@ class Table:
         self.database = database
         self.table_name = table_name
 
-    ''' Table operations '''
-    # Print the table
-    def print(self):
-        for table_name in self.database.db:
-            print(table_name)
-            for db_row in self.database.db[table_name]:
-                print(db_row)
-
     ''' CRUD operations '''
     # Given a list of values, create a row in the table
     def create(self, values):

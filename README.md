@@ -32,10 +32,6 @@ Delete a row like this:
 
     dogs.delete(["name"], [(lambda name: name == "Mose")]) # Bye Mose!
 
-Tables can be pretty-printed like this:
-
-    dogs.print()
-
 Tables can be dropped like this:
 
     db.delete("dogs")
