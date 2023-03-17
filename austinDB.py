@@ -62,8 +62,7 @@ class Table:
         matching_rows = []
 
         db_field_names = self.database.db[self.table_name][0]
-        if len(read_field_names) == 0:
-            read_field_names = db_field_names
+        read_field_names = read_field_names or db_field_names
         db_read_field_indices = [db_field_names.index(read_field_name) for read_field_name in read_field_names]
         db_test_field_indices = [db_field_names.index(test_field_name) for test_field_name in test_field_names]
 
